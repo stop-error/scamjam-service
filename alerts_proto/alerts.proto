@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package alerts_proto;
+
+option go_package = ".";
+
+service DnsAlerts {
+  rpc DnsAlerts (DnsThreat) returns (DnsReply);
+}
+
+message DnsThreat {
+  string hostname = 1;
+  string source = 2;
+  string type = 3;
+}
+
+message DnsReply {
+   bool ack = 1;
+}
