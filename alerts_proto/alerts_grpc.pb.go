@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DnsAlerts_DnsAlerts_FullMethodName = "/alerts_proto.DnsAlerts/DnsAlerts"
+	DnsAlerts_DnsAlertFound_FullMethodName = "/alerts_proto.DnsAlerts/DnsAlertFound"
 )
 
 // DnsAlertsClient is the client API for DnsAlerts service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DnsAlertsClient interface {
-	DnsAlerts(ctx context.Context, in *DnsThreat, opts ...grpc.CallOption) (*DnsReply, error)
+	DnsAlertFound(ctx context.Context, in *DnsThreat, opts ...grpc.CallOption) (*DnsReply, error)
 }
 
 type dnsAlertsClient struct {
@@ -37,10 +37,10 @@ func NewDnsAlertsClient(cc grpc.ClientConnInterface) DnsAlertsClient {
 	return &dnsAlertsClient{cc}
 }
 
-func (c *dnsAlertsClient) DnsAlerts(ctx context.Context, in *DnsThreat, opts ...grpc.CallOption) (*DnsReply, error) {
+func (c *dnsAlertsClient) DnsAlertFound(ctx context.Context, in *DnsThreat, opts ...grpc.CallOption) (*DnsReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DnsReply)
-	err := c.cc.Invoke(ctx, DnsAlerts_DnsAlerts_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DnsAlerts_DnsAlertFound_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *dnsAlertsClient) DnsAlerts(ctx context.Context, in *DnsThreat, opts ...
 // All implementations must embed UnimplementedDnsAlertsServer
 // for forward compatibility.
 type DnsAlertsServer interface {
-	DnsAlerts(context.Context, *DnsThreat) (*DnsReply, error)
+	DnsAlertFound(context.Context, *DnsThreat) (*DnsReply, error)
 	mustEmbedUnimplementedDnsAlertsServer()
 }
 
@@ -62,8 +62,8 @@ type DnsAlertsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDnsAlertsServer struct{}
 
-func (UnimplementedDnsAlertsServer) DnsAlerts(context.Context, *DnsThreat) (*DnsReply, error) {
-	return nil, status.Error(codes.Unimplemented, "method DnsAlerts not implemented")
+func (UnimplementedDnsAlertsServer) DnsAlertFound(context.Context, *DnsThreat) (*DnsReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method DnsAlertFound not implemented")
 }
 func (UnimplementedDnsAlertsServer) mustEmbedUnimplementedDnsAlertsServer() {}
 func (UnimplementedDnsAlertsServer) testEmbeddedByValue()                   {}
@@ -86,20 +86,20 @@ func RegisterDnsAlertsServer(s grpc.ServiceRegistrar, srv DnsAlertsServer) {
 	s.RegisterService(&DnsAlerts_ServiceDesc, srv)
 }
 
-func _DnsAlerts_DnsAlerts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DnsAlerts_DnsAlertFound_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DnsThreat)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DnsAlertsServer).DnsAlerts(ctx, in)
+		return srv.(DnsAlertsServer).DnsAlertFound(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DnsAlerts_DnsAlerts_FullMethodName,
+		FullMethod: DnsAlerts_DnsAlertFound_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DnsAlertsServer).DnsAlerts(ctx, req.(*DnsThreat))
+		return srv.(DnsAlertsServer).DnsAlertFound(ctx, req.(*DnsThreat))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var DnsAlerts_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DnsAlertsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DnsAlerts",
-			Handler:    _DnsAlerts_DnsAlerts_Handler,
+			MethodName: "DnsAlertFound",
+			Handler:    _DnsAlerts_DnsAlertFound_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

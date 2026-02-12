@@ -135,9 +135,9 @@ const file_alerts_proto_rawDesc = "" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\tR\x04type\"\x1c\n" +
 	"\bDnsReply\x12\x10\n" +
-	"\x03ack\x18\x01 \x01(\bR\x03ack2I\n" +
-	"\tDnsAlerts\x12<\n" +
-	"\tDnsAlerts\x12\x17.alerts_proto.DnsThreat\x1a\x16.alerts_proto.DnsReplyB\x03Z\x01.b\x06proto3"
+	"\x03ack\x18\x01 \x01(\bR\x03ack2M\n" +
+	"\tDnsAlerts\x12@\n" +
+	"\rDnsAlertFound\x12\x17.alerts_proto.DnsThreat\x1a\x16.alerts_proto.DnsReplyB\x03Z\x01.b\x06proto3"
 
 var (
 	file_alerts_proto_rawDescOnce sync.Once
@@ -157,8 +157,8 @@ var file_alerts_proto_goTypes = []any{
 	(*DnsReply)(nil),  // 1: alerts_proto.DnsReply
 }
 var file_alerts_proto_depIdxs = []int32{
-	0, // 0: alerts_proto.DnsAlerts.DnsAlerts:input_type -> alerts_proto.DnsThreat
-	1, // 1: alerts_proto.DnsAlerts.DnsAlerts:output_type -> alerts_proto.DnsReply
+	0, // 0: alerts_proto.DnsAlerts.DnsAlertFound:input_type -> alerts_proto.DnsThreat
+	1, // 1: alerts_proto.DnsAlerts.DnsAlertFound:output_type -> alerts_proto.DnsReply
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

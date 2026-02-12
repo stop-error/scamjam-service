@@ -5,7 +5,7 @@ package alerts_proto;
 option go_package = ".";
 
 service DnsAlerts {
-  rpc DnsAlerts (DnsThreat) returns (DnsReply);
+  rpc DnsAlertFound (DnsThreat) returns (DnsReply);
 }
 
 message DnsThreat {
