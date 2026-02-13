@@ -25,7 +25,7 @@ type program struct{
 func (p *program) Start(s service.Service) error {
 	// Start should not block. Do the actual work async.
 	logger.Info().Msg("Starting grpc servers...")
-	rpc.InitDnsAlertsRpc(&logger)
+	go rpc.InitDnsAlertsRpc(&logger)
 	
 	logger.Info().Msg("Starting main loop...")
 	go p.run()

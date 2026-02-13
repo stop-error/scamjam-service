@@ -25,7 +25,7 @@ type DnsThreat struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Hostname      string                 `protobuf:"bytes,1,opt,name=hostname,proto3" json:"hostname,omitempty"`
 	Source        string                 `protobuf:"bytes,2,opt,name=source,proto3" json:"source,omitempty"`
-	Catagory      string                 `protobuf:"bytes,3,opt,name=catagory,proto3" json:"catagory,omitempty"`
+	Category      string                 `protobuf:"bytes,3,opt,name=category,proto3" json:"category,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -74,9 +74,9 @@ func (x *DnsThreat) GetSource() string {
 	return ""
 }
 
-func (x *DnsThreat) GetCatagory() string {
+func (x *DnsThreat) GetCategory() string {
 	if x != nil {
-		return x.Catagory
+		return x.Category
 	}
 	return ""
 }
@@ -133,7 +133,7 @@ const file_alerts_proto_rawDesc = "" +
 	"\tDnsThreat\x12\x1a\n" +
 	"\bhostname\x18\x01 \x01(\tR\bhostname\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x1a\n" +
-	"\bcatagory\x18\x03 \x01(\tR\bcatagory\"\x1c\n" +
+	"\bcategory\x18\x03 \x01(\tR\bcategory\"\x1c\n" +
 	"\bDnsReply\x12\x10\n" +
 	"\x03ack\x18\x01 \x01(\bR\x03ack2M\n" +
 	"\tDnsAlerts\x12@\n" +

@@ -11,7 +11,7 @@ service DnsAlerts {
 message DnsThreat {
   string hostname = 1;
   string source = 2;
-  string catagory = 3;
+  string category = 3;
 }
 
 message DnsReply {
