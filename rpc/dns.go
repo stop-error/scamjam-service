@@ -6,35 +6,38 @@ import (
 
 	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/alts"
 	pbalerts "github.com/stop-error/scamjam-service/alerts_proto"
 )
 
-
+var rpcLogger *zerolog.Logger
 
 type server struct {
     pbalerts.UnsafeDnsAlertsServer
 }
 
 
-func (s *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
-    log.Printf("Received: %v\n", req.GetName())
-    return &pb.HelloResponse{
-        Message: fmt.Sprintf("Hello %s!", req.GetName()),
-    }, nil
+func (s *server) DnsAlertFound(ctx context.Context, threat *pbalerts.DnsThreat) (*pbalerts.DnsReply, error) {
+   	rpcLogger.Info().Msg("Received DnsThreat with details- Hostname: " + threat.Hostname + " Source: " + threat.Source + " ThreatType: " + threat.Catagory)
+    return &pbalerts.DnsReply{
+        Ack: true,
+    }, nil //add error checking for invalid submissions
 }
 
 
 
 func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as goroutine?
 
+	logger = rpcLogger
     const port = ":50051"
 
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
-		logger.Fatal().Msg("failed to listen on port: " + port + err.Error())
+		logger.Fatal().Msg("failed to listen on port: " + port + err.Error()) //TODO: Try another pot number
 	}
 
-	s := grpc.NewServer()
+	altsCreds := alts.NewServerCreds(alts.DefaultServerOptions())
+	s := grpc.NewServer(grpc.Creds(altsCreds))
 	pbalerts.RegisterDnsAlertsServer(s, &server{})
 
 	logger.Info().Msg("server listening at" + lis.Addr().String())
