@@ -33,9 +33,9 @@ func (p *program) Start(s service.Service) error {
 }
 func (p *program) run() {
 
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(20 * time.Second)
 	for {
-		logger.Info().Msg("Going to sleep for 1 second")
+		logger.Info().Msg("Going to sleep for 20 second")
 		select {
 		case tm := <-ticker.C:
 
