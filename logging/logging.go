@@ -1,14 +1,14 @@
 package logging
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/rs/zerolog/log"
-
 )
 
-func initLogger() (useLogFile bool, logFilePath string) {
+func InitLogger() (useLogFile bool, logFilePath string) {
 	executable, err := os.Executable()
 	if err != nil { 
 		log.Error().Msg("Could not get root path of executable file! Logging will be console only." + err.Error())
@@ -17,7 +17,7 @@ func initLogger() (useLogFile bool, logFilePath string) {
 
 	currentLogPath := filepath.Dir(executable) + "\\scamjam-service.log"
 	oldLogPath := filepath.Dir(executable) + "\\scamjam-service.old"
-	err = runLogCleanup(currentLogPath, oldLogPath)
+	err = RunLogCleanup(currentLogPath, oldLogPath)
 	if err != nil {
 		log.Error().Msg("Error running log cleanup! logging will be console-only." + err.Error())
 		return false, ""
@@ -26,7 +26,7 @@ func initLogger() (useLogFile bool, logFilePath string) {
 	return true, currentLogPath
 }
 
-func runLogCleanup(currentLogPath string, oldLogPath string) (error) { //TODO: Oh my god clean this up
+func RunLogCleanup(currentLogPath string, oldLogPath string) (error) { //TODO: Oh my god clean this up
 
 	log.Info().Msg("Running log cleanup")
 
@@ -54,4 +54,31 @@ func runLogCleanup(currentLogPath string, oldLogPath string) (error) { //TODO: O
 		}
 	}	
 	return nil
+}
+
+func CopyFile(src string, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		log.Error().Msg("Error opening file at " + src + "Error: " + err.Error())
+		return err
+	}
+
+	defer sourceFile.Close()
+
+	destFile, err := os.Create(dst)
+	if err != nil {
+		log.Error().Msg("Error creating file at " + dst + "! Error: " + err.Error())
+		return err
+	}
+
+	defer destFile.Close()
+
+	_, err = io.Copy(sourceFile, destFile)
+	if err != nil {
+		log.Error().Msg("Error copying file " + dst + "! Error: " + err.Error())
+		return err
+	}
+
+	return nil
+
 }
