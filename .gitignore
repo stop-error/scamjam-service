@@ -33,3 +33,4 @@ go.work.sum
 
 *.log
 *.old
+ui.go

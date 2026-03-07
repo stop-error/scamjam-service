@@ -27,10 +27,6 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/rs/xid v1.6.0/go.mod h1:7XoLgs4eV+QndskICGsho+ADou8ySMSjJKDIan90Nz0=
 github.com/rs/zerolog v1.34.0 h1:k43nTLIwcTVQAncfCw4KZ2VY6ukYoZaBPNOE8txlOeY=
 github.com/rs/zerolog v1.34.0/go.mod h1:bJsvje4Z08ROH4Nhs5iH600c3IkWhwp44iRc54W6wYQ=
-github.com/stop-error/scamjam-tls v0.1.4 h1:ZR1VDuLGUVZ9vgyp80NoFPLZQvAXskXqkdOs5ofMlbM=
-github.com/stop-error/scamjam-tls v0.1.4/go.mod h1:Kuf4sF65G3EJfFFNwJENeVT1vkJ8U1wSlto+Y6WBBeE=
-github.com/stop-error/scamjam-tls v0.1.5 h1:d+LWLZGwEPZK3ApL8qYRjfau3qbKvNyhRTNFIH0cyMs=
-github.com/stop-error/scamjam-tls v0.1.5/go.mod h1:FXmIA5ZeaQauGQnxLj5xm5/9WnVvGQVZ7vjvwyA1LCo=
 go.opentelemetry.io/auto/sdk v1.2.1 h1:jXsnJ4Lmnqd11kwkBV2LgLoFMZKizbCi5fNZ/ipaZ64=
 go.opentelemetry.io/auto/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
 go.opentelemetry.io/otel v1.39.0 h1:8yPrr/S0ND9QEfTfdP9V+SiwT4E0G7Y5MO7p85nis48=

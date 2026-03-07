@@ -6,7 +6,6 @@ require (
 	github.com/billgraziano/dpapi v0.5.0
 	github.com/kardianos/service v1.2.4
 	github.com/rs/zerolog v1.34.0
-	github.com/stop-error/scamjam-tls v0.1.7
 	google.golang.org/grpc v1.79.0
 	google.golang.org/protobuf v1.36.10
 )

@@ -5,15 +5,30 @@ package alerts_proto;
 option go_package = ".";
 
 service DnsAlerts {
-  rpc DnsAlertFound (DnsThreat) returns (DnsReply);
+  rpc Dns(stream DnsAlertMessageFromBlocky) returns ( stream DnsAlertReplyToBlocky);
 }
 
-message DnsThreat {
+service UiAlerts {
+  rpc Ui(stream UiAlertMessageToHost) returns (stream UiAlertReplyFromHost);
+}
+
+message DnsAlertMessageFromBlocky {
   string hostname = 1;
   string source = 2;
   string category = 3;
 }
 
-message DnsReply {
+message DnsAlertReplyToBlocky {
    bool ack = 1;
+}
+
+message UiAlertMessageToHost {
+  string threatCategory = 1;
+  string threatSubCategory = 2;
+  string threatEntityName = 3;
+  string threatIntelSource = 4;
+}
+
+message UiAlertReplyFromHost {
+  string userAction = 1;
 }

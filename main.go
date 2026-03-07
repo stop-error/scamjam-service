@@ -14,6 +14,7 @@ import (
 	"github.com/kardianos/service"
 
 	"github.com/stop-error/scamjam-service/rpc"
+	"github.com/stop-error/scamjam-service/logging"
 )
 
 var logger zerolog.Logger
@@ -44,10 +45,10 @@ func (p *program) run() {
 				
 				
 
-		case <-p.exit:
-			logger.Info().Msg("scamjam-dns-watchdog has recieved exit signal!")
+		// case <-p.exit:
+		// 	logger.Info().Msg("scamjam-dns-watchdog has recieved exit signal!")
 		
-			ticker.Stop()
+		// 	ticker.Stop()
 		}
 	}
 
@@ -55,13 +56,25 @@ func (p *program) run() {
 }
 func (p *program) Stop(s service.Service) error {
 	// Stop should not block. Return with a few seconds.
-	close(p.exit)
+	// close(p.exit)
+	certsPath := os.Getenv("ProgramData") + "\\ScamJam\\grpc\\dns\\tls" 
+	certsArray :=[]string{"scamjam-ca.pem"}
+	for i := 0; i < len(certsArray); i++ {
+		fullCertsPath := certsPath + certsArray[i]
+		if _, err := os.Stat(fullCertsPath); err == nil {
+			err := os.Remove(fullCertsPath)
+			if err != nil {
+				log.Error().Msg("Error cleaning up " + fullCertsPath + err.Error())
+			}
+		}
+	}
 	return nil
 }
 
+
 func main() {
 
-	useLogFile, logPath := initLogger()
+	useLogFile, logPath := logging.InitLogger()
 		if useLogFile == true {
 			logFile, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0664)
 			if err != nil {

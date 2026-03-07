@@ -1,37 +1,65 @@
 package rpc
 
 import (
-	"net"
-	"context"
-	"os"
 	"crypto/tls"
+	"io"
+	"net"
+	"os"
 
 	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-	"github.com/billgraziano/dpapi"
+
 	pbalerts "github.com/stop-error/scamjam-service/alerts_proto"
+	"github.com/stop-error/scamjam-service/certs"
 )
 
 var rpcLogger *zerolog.Logger
 
-var programData = os.Getenv("ProgramData")
-var scamJamProgramDataCerts = programData + "\\ScamJam\\grpc\\dns\\tls"
-
-type server struct {
+type DnsAlertsServer struct {
     pbalerts.UnsafeDnsAlertsServer
 }
 
 
-func (s *server) DnsAlertFound(ctx context.Context, threat *pbalerts.DnsThreat) (*pbalerts.DnsReply, error) {
-   	rpcLogger.Info().Msg("Received DnsThreat with details- Hostname: " + threat.Hostname + " Source: " + threat.Source + " ThreatType: " + threat.Category)
-    return &pbalerts.DnsReply{
-        Ack: true,
-    }, nil //add error checking for invalid submissions
+func (server DnsAlertsServer) Dns(srv pbalerts.DnsAlerts_DnsServer) error {
+	rpcLogger.Info().Msg("Starting DnsAlertsServer grpc stream loop")
+
+	ctx := srv.Context()
+
+	for {
+
+		// exit if context is done
+		// or continue
+		select {
+		case <-ctx.Done():
+			rpcLogger.Error().Err(ctx.Err()).Msg("Stream loop executed ctx.Done case! (Check the context deadline?)")
+			return ctx.Err()
+		default:
+		}
+
+		// receive data from stream
+		req, err := srv.Recv()
+		if err == io.EOF {
+			// return will close stream from server side
+			rpcLogger.Info().Msg("Recieved io.EOF from client, shutting down grpc stream.")
+			return nil
+		}
+		if err != nil {
+			rpcLogger.Error().Err(err).Msg("Recieved error from client!")
+			continue
+		}
+
+		rpcLogger.Info().Msg("Recieved message from client (blocky): " + req.Category + " " + req.Hostname + " " + req.Source)
+		
+	}
 }
 
 
 func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as goroutine? TODO: clean up, better error handling
+
+	programData := os.Getenv("ProgramData")
+	scamJamProgramDataCerts := programData + "\\ScamJam\\grpc\\dns"
+
 
 	rpcLogger = logger
     const port = ":50051"
@@ -44,7 +72,7 @@ func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as
 		}
 	}
 
-	caCertPEMBytes, caPrivateKeyPEMBytes, leafCertPEMBytes, leafPrivateKeyPEMBytes := InitTls(logger)
+	caCertPEMBytes, caPrivateKeyPEMBytes, leafCertPEMBytes, leafPrivateKeyPEMBytes := InitDnsTls(logger)
 
 	caCertPEMBytes, err :=EncryptPEMBytesDpapi(logger, caCertPEMBytes)
 	if err != nil {
@@ -79,7 +107,7 @@ func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as
 	}
 
 	s := grpc.NewServer(grpc.Creds(tlsCreds))
-	pbalerts.RegisterDnsAlertsServer(s, &server{})
+	pbalerts.RegisterDnsAlertsServer(s, &DnsAlertsServer{})
 
 	logger.Info().Msg("DnsAlerts grpc server listening at" + lis.Addr().String())
 	if err := s.Serve(lis); err != nil {
@@ -87,14 +115,18 @@ func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as
 	}
 }
 
-
-func EncryptPEMBytesDpapi(logger *zerolog.Logger, pemBytes []byte) (pemBytesDpapi []byte, err error) {
-	pemBytes, err = dpapi.EncryptBytes(pemBytes)
+func InitDnsTls(logger *zerolog.Logger) (caCertPEMBytes []byte, caPrivateKeyPEMBytes []byte, leafCertPEMBytes []byte, leafPrivateKeyPEMBytes []byte){
+	caCertPEMBytes, caPrivateKeyPEMBytes, err := certs.GetRootCa(logger, "scamjam-service")
 	if err != nil {
-		logger.Error().Err(err).Msg("Error protecting PEMBytes with DPAPI!")
-		byteError := []byte{}
-		return byteError, err
+		logger.Error().Err(err).Msg("Error getting CA cert and private key!")
 	}
-	return pemBytes, nil
+
+	leafCertPEMBytes, leafPrivateKeyPEMBytes, err = certs.GetLeaf(logger, "scamjam-service", caCertPEMBytes, caPrivateKeyPEMBytes)
+
+	return caCertPEMBytes, caPrivateKeyPEMBytes, leafCertPEMBytes, leafPrivateKeyPEMBytes
+	
 }
+
+
+
 
