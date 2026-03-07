@@ -19,94 +19,94 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DnsAlerts_Dns_FullMethodName = "/alerts_proto.DnsAlerts/Dns"
+	DnsAlertService_Dns_FullMethodName = "/alerts_proto.DnsAlertService/Dns"
 )
 
-// DnsAlertsClient is the client API for DnsAlerts service.
+// DnsAlertServiceClient is the client API for DnsAlertService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DnsAlertsClient interface {
-	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlert], error)
+type DnsAlertServiceClient interface {
+	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlertReply], error)
 }
 
-type dnsAlertsClient struct {
+type dnsAlertServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDnsAlertsClient(cc grpc.ClientConnInterface) DnsAlertsClient {
-	return &dnsAlertsClient{cc}
+func NewDnsAlertServiceClient(cc grpc.ClientConnInterface) DnsAlertServiceClient {
+	return &dnsAlertServiceClient{cc}
 }
 
-func (c *dnsAlertsClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlert], error) {
+func (c *dnsAlertServiceClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlertReply], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &DnsAlerts_ServiceDesc.Streams[0], DnsAlerts_Dns_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &DnsAlertService_ServiceDesc.Streams[0], DnsAlertService_Dns_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[DnsAlert, DnsAlert]{ClientStream: stream}
+	x := &grpc.GenericClientStream[DnsAlert, DnsAlertReply]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlerts_DnsClient = grpc.BidiStreamingClient[DnsAlert, DnsAlert]
+type DnsAlertService_DnsClient = grpc.BidiStreamingClient[DnsAlert, DnsAlertReply]
 
-// DnsAlertsServer is the server API for DnsAlerts service.
-// All implementations must embed UnimplementedDnsAlertsServer
+// DnsAlertServiceServer is the server API for DnsAlertService service.
+// All implementations must embed UnimplementedDnsAlertServiceServer
 // for forward compatibility.
-type DnsAlertsServer interface {
-	Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlert]) error
-	mustEmbedUnimplementedDnsAlertsServer()
+type DnsAlertServiceServer interface {
+	Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]) error
+	mustEmbedUnimplementedDnsAlertServiceServer()
 }
 
-// UnimplementedDnsAlertsServer must be embedded to have
+// UnimplementedDnsAlertServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedDnsAlertsServer struct{}
+type UnimplementedDnsAlertServiceServer struct{}
 
-func (UnimplementedDnsAlertsServer) Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlert]) error {
+func (UnimplementedDnsAlertServiceServer) Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]) error {
 	return status.Error(codes.Unimplemented, "method Dns not implemented")
 }
-func (UnimplementedDnsAlertsServer) mustEmbedUnimplementedDnsAlertsServer() {}
-func (UnimplementedDnsAlertsServer) testEmbeddedByValue()                   {}
+func (UnimplementedDnsAlertServiceServer) mustEmbedUnimplementedDnsAlertServiceServer() {}
+func (UnimplementedDnsAlertServiceServer) testEmbeddedByValue()                         {}
 
-// UnsafeDnsAlertsServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DnsAlertsServer will
+// UnsafeDnsAlertServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DnsAlertServiceServer will
 // result in compilation errors.
-type UnsafeDnsAlertsServer interface {
-	mustEmbedUnimplementedDnsAlertsServer()
+type UnsafeDnsAlertServiceServer interface {
+	mustEmbedUnimplementedDnsAlertServiceServer()
 }
 
-func RegisterDnsAlertsServer(s grpc.ServiceRegistrar, srv DnsAlertsServer) {
-	// If the following call panics, it indicates UnimplementedDnsAlertsServer was
+func RegisterDnsAlertServiceServer(s grpc.ServiceRegistrar, srv DnsAlertServiceServer) {
+	// If the following call panics, it indicates UnimplementedDnsAlertServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&DnsAlerts_ServiceDesc, srv)
+	s.RegisterService(&DnsAlertService_ServiceDesc, srv)
 }
 
-func _DnsAlerts_Dns_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(DnsAlertsServer).Dns(&grpc.GenericServerStream[DnsAlert, DnsAlert]{ServerStream: stream})
+func _DnsAlertService_Dns_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DnsAlertServiceServer).Dns(&grpc.GenericServerStream[DnsAlert, DnsAlertReply]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlerts_DnsServer = grpc.BidiStreamingServer[DnsAlert, DnsAlert]
+type DnsAlertService_DnsServer = grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]
 
-// DnsAlerts_ServiceDesc is the grpc.ServiceDesc for DnsAlerts service.
+// DnsAlertService_ServiceDesc is the grpc.ServiceDesc for DnsAlertService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var DnsAlerts_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "alerts_proto.DnsAlerts",
-	HandlerType: (*DnsAlertsServer)(nil),
+var DnsAlertService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "alerts_proto.DnsAlertService",
+	HandlerType: (*DnsAlertServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Dns",
-			Handler:       _DnsAlerts_Dns_Handler,
+			Handler:       _DnsAlertService_Dns_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
@@ -115,27 +115,27 @@ var DnsAlerts_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	UiAlerts_Ui_FullMethodName = "/alerts_proto.UiAlerts/Ui"
+	UiAlertService_Ui_FullMethodName = "/alerts_proto.UiAlertService/Ui"
 )
 
-// UiAlertsClient is the client API for UiAlerts service.
+// UiAlertServiceClient is the client API for UiAlertService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UiAlertsClient interface {
+type UiAlertServiceClient interface {
 	Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlert, UiAlertReply], error)
 }
 
-type uiAlertsClient struct {
+type uiAlertServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUiAlertsClient(cc grpc.ClientConnInterface) UiAlertsClient {
-	return &uiAlertsClient{cc}
+func NewUiAlertServiceClient(cc grpc.ClientConnInterface) UiAlertServiceClient {
+	return &uiAlertServiceClient{cc}
 }
 
-func (c *uiAlertsClient) Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlert, UiAlertReply], error) {
+func (c *uiAlertServiceClient) Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlert, UiAlertReply], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &UiAlerts_ServiceDesc.Streams[0], UiAlerts_Ui_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &UiAlertService_ServiceDesc.Streams[0], UiAlertService_Ui_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,65 +144,65 @@ func (c *uiAlertsClient) Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UiAlerts_UiClient = grpc.BidiStreamingClient[UiAlert, UiAlertReply]
+type UiAlertService_UiClient = grpc.BidiStreamingClient[UiAlert, UiAlertReply]
 
-// UiAlertsServer is the server API for UiAlerts service.
-// All implementations must embed UnimplementedUiAlertsServer
+// UiAlertServiceServer is the server API for UiAlertService service.
+// All implementations must embed UnimplementedUiAlertServiceServer
 // for forward compatibility.
-type UiAlertsServer interface {
+type UiAlertServiceServer interface {
 	Ui(grpc.BidiStreamingServer[UiAlert, UiAlertReply]) error
-	mustEmbedUnimplementedUiAlertsServer()
+	mustEmbedUnimplementedUiAlertServiceServer()
 }
 
-// UnimplementedUiAlertsServer must be embedded to have
+// UnimplementedUiAlertServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedUiAlertsServer struct{}
+type UnimplementedUiAlertServiceServer struct{}
 
-func (UnimplementedUiAlertsServer) Ui(grpc.BidiStreamingServer[UiAlert, UiAlertReply]) error {
+func (UnimplementedUiAlertServiceServer) Ui(grpc.BidiStreamingServer[UiAlert, UiAlertReply]) error {
 	return status.Error(codes.Unimplemented, "method Ui not implemented")
 }
-func (UnimplementedUiAlertsServer) mustEmbedUnimplementedUiAlertsServer() {}
-func (UnimplementedUiAlertsServer) testEmbeddedByValue()                  {}
+func (UnimplementedUiAlertServiceServer) mustEmbedUnimplementedUiAlertServiceServer() {}
+func (UnimplementedUiAlertServiceServer) testEmbeddedByValue()                        {}
 
-// UnsafeUiAlertsServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UiAlertsServer will
+// UnsafeUiAlertServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UiAlertServiceServer will
 // result in compilation errors.
-type UnsafeUiAlertsServer interface {
-	mustEmbedUnimplementedUiAlertsServer()
+type UnsafeUiAlertServiceServer interface {
+	mustEmbedUnimplementedUiAlertServiceServer()
 }
 
-func RegisterUiAlertsServer(s grpc.ServiceRegistrar, srv UiAlertsServer) {
-	// If the following call panics, it indicates UnimplementedUiAlertsServer was
+func RegisterUiAlertServiceServer(s grpc.ServiceRegistrar, srv UiAlertServiceServer) {
+	// If the following call panics, it indicates UnimplementedUiAlertServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&UiAlerts_ServiceDesc, srv)
+	s.RegisterService(&UiAlertService_ServiceDesc, srv)
 }
 
-func _UiAlerts_Ui_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(UiAlertsServer).Ui(&grpc.GenericServerStream[UiAlert, UiAlertReply]{ServerStream: stream})
+func _UiAlertService_Ui_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(UiAlertServiceServer).Ui(&grpc.GenericServerStream[UiAlert, UiAlertReply]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UiAlerts_UiServer = grpc.BidiStreamingServer[UiAlert, UiAlertReply]
+type UiAlertService_UiServer = grpc.BidiStreamingServer[UiAlert, UiAlertReply]
 
-// UiAlerts_ServiceDesc is the grpc.ServiceDesc for UiAlerts service.
+// UiAlertService_ServiceDesc is the grpc.ServiceDesc for UiAlertService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UiAlerts_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "alerts_proto.UiAlerts",
-	HandlerType: (*UiAlertsServer)(nil),
+var UiAlertService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "alerts_proto.UiAlertService",
+	HandlerType: (*UiAlertServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Ui",
-			Handler:       _UiAlerts_Ui_Handler,
+			Handler:       _UiAlertService_Ui_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

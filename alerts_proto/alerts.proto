@@ -4,11 +4,11 @@ package alerts_proto;
 
 option go_package = ".";
 
-service DnsAlerts {
-  rpc Dns(stream DnsAlert) returns ( stream DnsAlert);
+service DnsAlertService {
+  rpc Dns(stream DnsAlert) returns ( stream DnsAlertReply);
 }
 
-service UiAlerts {
+service UiAlertService {
   rpc Ui(stream UiAlert) returns (stream UiAlertReply);
 }
 

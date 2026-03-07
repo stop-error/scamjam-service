@@ -256,10 +256,10 @@ const file_alerts_proto_rawDesc = "" +
 	"\fUiAlertReply\x12\x1e\n" +
 	"\n" +
 	"userAction\x18\x01 \x01(\tR\n" +
-	"userAction2F\n" +
-	"\tDnsAlerts\x129\n" +
-	"\x03Dns\x12\x16.alerts_proto.DnsAlert\x1a\x16.alerts_proto.DnsAlert(\x010\x012G\n" +
-	"\bUiAlerts\x12;\n" +
+	"userAction2Q\n" +
+	"\x0fDnsAlertService\x12>\n" +
+	"\x03Dns\x12\x16.alerts_proto.DnsAlert\x1a\x1b.alerts_proto.DnsAlertReply(\x010\x012M\n" +
+	"\x0eUiAlertService\x12;\n" +
 	"\x02Ui\x12\x15.alerts_proto.UiAlert\x1a\x1a.alerts_proto.UiAlertReply(\x010\x01B\x03Z\x01.b\x06proto3"
 
 var (
@@ -282,10 +282,10 @@ var file_alerts_proto_goTypes = []any{
 	(*UiAlertReply)(nil),  // 3: alerts_proto.UiAlertReply
 }
 var file_alerts_proto_depIdxs = []int32{
-	0, // 0: alerts_proto.DnsAlerts.Dns:input_type -> alerts_proto.DnsAlert
-	2, // 1: alerts_proto.UiAlerts.Ui:input_type -> alerts_proto.UiAlert
-	0, // 2: alerts_proto.DnsAlerts.Dns:output_type -> alerts_proto.DnsAlert
-	3, // 3: alerts_proto.UiAlerts.Ui:output_type -> alerts_proto.UiAlertReply
+	0, // 0: alerts_proto.DnsAlertService.Dns:input_type -> alerts_proto.DnsAlert
+	2, // 1: alerts_proto.UiAlertService.Ui:input_type -> alerts_proto.UiAlert
+	1, // 2: alerts_proto.DnsAlertService.Dns:output_type -> alerts_proto.DnsAlertReply
+	3, // 3: alerts_proto.UiAlertService.Ui:output_type -> alerts_proto.UiAlertReply
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
