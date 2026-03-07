@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DnsAlertsClient interface {
-	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky], error)
+	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlert], error)
 }
 
 type dnsAlertsClient struct {
@@ -37,24 +37,24 @@ func NewDnsAlertsClient(cc grpc.ClientConnInterface) DnsAlertsClient {
 	return &dnsAlertsClient{cc}
 }
 
-func (c *dnsAlertsClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky], error) {
+func (c *dnsAlertsClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlert], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &DnsAlerts_ServiceDesc.Streams[0], DnsAlerts_Dns_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]{ClientStream: stream}
+	x := &grpc.GenericClientStream[DnsAlert, DnsAlert]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlerts_DnsClient = grpc.BidiStreamingClient[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]
+type DnsAlerts_DnsClient = grpc.BidiStreamingClient[DnsAlert, DnsAlert]
 
 // DnsAlertsServer is the server API for DnsAlerts service.
 // All implementations must embed UnimplementedDnsAlertsServer
 // for forward compatibility.
 type DnsAlertsServer interface {
-	Dns(grpc.BidiStreamingServer[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]) error
+	Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlert]) error
 	mustEmbedUnimplementedDnsAlertsServer()
 }
 
@@ -65,7 +65,7 @@ type DnsAlertsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDnsAlertsServer struct{}
 
-func (UnimplementedDnsAlertsServer) Dns(grpc.BidiStreamingServer[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]) error {
+func (UnimplementedDnsAlertsServer) Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlert]) error {
 	return status.Error(codes.Unimplemented, "method Dns not implemented")
 }
 func (UnimplementedDnsAlertsServer) mustEmbedUnimplementedDnsAlertsServer() {}
@@ -90,11 +90,11 @@ func RegisterDnsAlertsServer(s grpc.ServiceRegistrar, srv DnsAlertsServer) {
 }
 
 func _DnsAlerts_Dns_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(DnsAlertsServer).Dns(&grpc.GenericServerStream[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]{ServerStream: stream})
+	return srv.(DnsAlertsServer).Dns(&grpc.GenericServerStream[DnsAlert, DnsAlert]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlerts_DnsServer = grpc.BidiStreamingServer[DnsAlertMessageFromBlocky, DnsAlertReplyToBlocky]
+type DnsAlerts_DnsServer = grpc.BidiStreamingServer[DnsAlert, DnsAlert]
 
 // DnsAlerts_ServiceDesc is the grpc.ServiceDesc for DnsAlerts service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -122,7 +122,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UiAlertsClient interface {
-	Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlertMessageToHost, UiAlertReplyFromHost], error)
+	Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlert, UiAlertReply], error)
 }
 
 type uiAlertsClient struct {
@@ -133,24 +133,24 @@ func NewUiAlertsClient(cc grpc.ClientConnInterface) UiAlertsClient {
 	return &uiAlertsClient{cc}
 }
 
-func (c *uiAlertsClient) Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlertMessageToHost, UiAlertReplyFromHost], error) {
+func (c *uiAlertsClient) Ui(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[UiAlert, UiAlertReply], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UiAlerts_ServiceDesc.Streams[0], UiAlerts_Ui_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[UiAlertMessageToHost, UiAlertReplyFromHost]{ClientStream: stream}
+	x := &grpc.GenericClientStream[UiAlert, UiAlertReply]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UiAlerts_UiClient = grpc.BidiStreamingClient[UiAlertMessageToHost, UiAlertReplyFromHost]
+type UiAlerts_UiClient = grpc.BidiStreamingClient[UiAlert, UiAlertReply]
 
 // UiAlertsServer is the server API for UiAlerts service.
 // All implementations must embed UnimplementedUiAlertsServer
 // for forward compatibility.
 type UiAlertsServer interface {
-	Ui(grpc.BidiStreamingServer[UiAlertMessageToHost, UiAlertReplyFromHost]) error
+	Ui(grpc.BidiStreamingServer[UiAlert, UiAlertReply]) error
 	mustEmbedUnimplementedUiAlertsServer()
 }
 
@@ -161,7 +161,7 @@ type UiAlertsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUiAlertsServer struct{}
 
-func (UnimplementedUiAlertsServer) Ui(grpc.BidiStreamingServer[UiAlertMessageToHost, UiAlertReplyFromHost]) error {
+func (UnimplementedUiAlertsServer) Ui(grpc.BidiStreamingServer[UiAlert, UiAlertReply]) error {
 	return status.Error(codes.Unimplemented, "method Ui not implemented")
 }
 func (UnimplementedUiAlertsServer) mustEmbedUnimplementedUiAlertsServer() {}
@@ -186,11 +186,11 @@ func RegisterUiAlertsServer(s grpc.ServiceRegistrar, srv UiAlertsServer) {
 }
 
 func _UiAlerts_Ui_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(UiAlertsServer).Ui(&grpc.GenericServerStream[UiAlertMessageToHost, UiAlertReplyFromHost]{ServerStream: stream})
+	return srv.(UiAlertsServer).Ui(&grpc.GenericServerStream[UiAlert, UiAlertReply]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UiAlerts_UiServer = grpc.BidiStreamingServer[UiAlertMessageToHost, UiAlertReplyFromHost]
+type UiAlerts_UiServer = grpc.BidiStreamingServer[UiAlert, UiAlertReply]
 
 // UiAlerts_ServiceDesc is the grpc.ServiceDesc for UiAlerts service.
 // It's only intended for direct use with grpc.RegisterService,

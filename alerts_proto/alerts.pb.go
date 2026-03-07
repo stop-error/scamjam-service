@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type DnsAlertMessageFromBlocky struct {
+type DnsAlert struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Hostname      string                 `protobuf:"bytes,1,opt,name=hostname,proto3" json:"hostname,omitempty"`
 	Source        string                 `protobuf:"bytes,2,opt,name=source,proto3" json:"source,omitempty"`
@@ -30,20 +30,20 @@ type DnsAlertMessageFromBlocky struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DnsAlertMessageFromBlocky) Reset() {
-	*x = DnsAlertMessageFromBlocky{}
+func (x *DnsAlert) Reset() {
+	*x = DnsAlert{}
 	mi := &file_alerts_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DnsAlertMessageFromBlocky) String() string {
+func (x *DnsAlert) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DnsAlertMessageFromBlocky) ProtoMessage() {}
+func (*DnsAlert) ProtoMessage() {}
 
-func (x *DnsAlertMessageFromBlocky) ProtoReflect() protoreflect.Message {
+func (x *DnsAlert) ProtoReflect() protoreflect.Message {
 	mi := &file_alerts_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,53 +55,53 @@ func (x *DnsAlertMessageFromBlocky) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DnsAlertMessageFromBlocky.ProtoReflect.Descriptor instead.
-func (*DnsAlertMessageFromBlocky) Descriptor() ([]byte, []int) {
+// Deprecated: Use DnsAlert.ProtoReflect.Descriptor instead.
+func (*DnsAlert) Descriptor() ([]byte, []int) {
 	return file_alerts_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *DnsAlertMessageFromBlocky) GetHostname() string {
+func (x *DnsAlert) GetHostname() string {
 	if x != nil {
 		return x.Hostname
 	}
 	return ""
 }
 
-func (x *DnsAlertMessageFromBlocky) GetSource() string {
+func (x *DnsAlert) GetSource() string {
 	if x != nil {
 		return x.Source
 	}
 	return ""
 }
 
-func (x *DnsAlertMessageFromBlocky) GetCategory() string {
+func (x *DnsAlert) GetCategory() string {
 	if x != nil {
 		return x.Category
 	}
 	return ""
 }
 
-type DnsAlertReplyToBlocky struct {
+type DnsAlertReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Ack           bool                   `protobuf:"varint,1,opt,name=ack,proto3" json:"ack,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DnsAlertReplyToBlocky) Reset() {
-	*x = DnsAlertReplyToBlocky{}
+func (x *DnsAlertReply) Reset() {
+	*x = DnsAlertReply{}
 	mi := &file_alerts_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DnsAlertReplyToBlocky) String() string {
+func (x *DnsAlertReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DnsAlertReplyToBlocky) ProtoMessage() {}
+func (*DnsAlertReply) ProtoMessage() {}
 
-func (x *DnsAlertReplyToBlocky) ProtoReflect() protoreflect.Message {
+func (x *DnsAlertReply) ProtoReflect() protoreflect.Message {
 	mi := &file_alerts_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -113,19 +113,19 @@ func (x *DnsAlertReplyToBlocky) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DnsAlertReplyToBlocky.ProtoReflect.Descriptor instead.
-func (*DnsAlertReplyToBlocky) Descriptor() ([]byte, []int) {
+// Deprecated: Use DnsAlertReply.ProtoReflect.Descriptor instead.
+func (*DnsAlertReply) Descriptor() ([]byte, []int) {
 	return file_alerts_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *DnsAlertReplyToBlocky) GetAck() bool {
+func (x *DnsAlertReply) GetAck() bool {
 	if x != nil {
 		return x.Ack
 	}
 	return false
 }
 
-type UiAlertMessageToHost struct {
+type UiAlert struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	ThreatCategory    string                 `protobuf:"bytes,1,opt,name=threatCategory,proto3" json:"threatCategory,omitempty"`
 	ThreatSubCategory string                 `protobuf:"bytes,2,opt,name=threatSubCategory,proto3" json:"threatSubCategory,omitempty"`
@@ -135,20 +135,20 @@ type UiAlertMessageToHost struct {
 	sizeCache         protoimpl.SizeCache
 }
 
-func (x *UiAlertMessageToHost) Reset() {
-	*x = UiAlertMessageToHost{}
+func (x *UiAlert) Reset() {
+	*x = UiAlert{}
 	mi := &file_alerts_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UiAlertMessageToHost) String() string {
+func (x *UiAlert) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UiAlertMessageToHost) ProtoMessage() {}
+func (*UiAlert) ProtoMessage() {}
 
-func (x *UiAlertMessageToHost) ProtoReflect() protoreflect.Message {
+func (x *UiAlert) ProtoReflect() protoreflect.Message {
 	mi := &file_alerts_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -160,60 +160,60 @@ func (x *UiAlertMessageToHost) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UiAlertMessageToHost.ProtoReflect.Descriptor instead.
-func (*UiAlertMessageToHost) Descriptor() ([]byte, []int) {
+// Deprecated: Use UiAlert.ProtoReflect.Descriptor instead.
+func (*UiAlert) Descriptor() ([]byte, []int) {
 	return file_alerts_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *UiAlertMessageToHost) GetThreatCategory() string {
+func (x *UiAlert) GetThreatCategory() string {
 	if x != nil {
 		return x.ThreatCategory
 	}
 	return ""
 }
 
-func (x *UiAlertMessageToHost) GetThreatSubCategory() string {
+func (x *UiAlert) GetThreatSubCategory() string {
 	if x != nil {
 		return x.ThreatSubCategory
 	}
 	return ""
 }
 
-func (x *UiAlertMessageToHost) GetThreatEntityName() string {
+func (x *UiAlert) GetThreatEntityName() string {
 	if x != nil {
 		return x.ThreatEntityName
 	}
 	return ""
 }
 
-func (x *UiAlertMessageToHost) GetThreatIntelSource() string {
+func (x *UiAlert) GetThreatIntelSource() string {
 	if x != nil {
 		return x.ThreatIntelSource
 	}
 	return ""
 }
 
-type UiAlertReplyFromHost struct {
+type UiAlertReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserAction    string                 `protobuf:"bytes,1,opt,name=userAction,proto3" json:"userAction,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UiAlertReplyFromHost) Reset() {
-	*x = UiAlertReplyFromHost{}
+func (x *UiAlertReply) Reset() {
+	*x = UiAlertReply{}
 	mi := &file_alerts_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UiAlertReplyFromHost) String() string {
+func (x *UiAlertReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UiAlertReplyFromHost) ProtoMessage() {}
+func (*UiAlertReply) ProtoMessage() {}
 
-func (x *UiAlertReplyFromHost) ProtoReflect() protoreflect.Message {
+func (x *UiAlertReply) ProtoReflect() protoreflect.Message {
 	mi := &file_alerts_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -225,12 +225,12 @@ func (x *UiAlertReplyFromHost) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UiAlertReplyFromHost.ProtoReflect.Descriptor instead.
-func (*UiAlertReplyFromHost) Descriptor() ([]byte, []int) {
+// Deprecated: Use UiAlertReply.ProtoReflect.Descriptor instead.
+func (*UiAlertReply) Descriptor() ([]byte, []int) {
 	return file_alerts_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UiAlertReplyFromHost) GetUserAction() string {
+func (x *UiAlertReply) GetUserAction() string {
 	if x != nil {
 		return x.UserAction
 	}
@@ -241,26 +241,26 @@ var File_alerts_proto protoreflect.FileDescriptor
 
 const file_alerts_proto_rawDesc = "" +
 	"\n" +
-	"\falerts.proto\x12\falerts_proto\"k\n" +
-	"\x19DnsAlertMessageFromBlocky\x12\x1a\n" +
+	"\falerts.proto\x12\falerts_proto\"Z\n" +
+	"\bDnsAlert\x12\x1a\n" +
 	"\bhostname\x18\x01 \x01(\tR\bhostname\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x1a\n" +
-	"\bcategory\x18\x03 \x01(\tR\bcategory\")\n" +
-	"\x15DnsAlertReplyToBlocky\x12\x10\n" +
-	"\x03ack\x18\x01 \x01(\bR\x03ack\"\xc6\x01\n" +
-	"\x14UiAlertMessageToHost\x12&\n" +
+	"\bcategory\x18\x03 \x01(\tR\bcategory\"!\n" +
+	"\rDnsAlertReply\x12\x10\n" +
+	"\x03ack\x18\x01 \x01(\bR\x03ack\"\xb9\x01\n" +
+	"\aUiAlert\x12&\n" +
 	"\x0ethreatCategory\x18\x01 \x01(\tR\x0ethreatCategory\x12,\n" +
 	"\x11threatSubCategory\x18\x02 \x01(\tR\x11threatSubCategory\x12*\n" +
 	"\x10threatEntityName\x18\x03 \x01(\tR\x10threatEntityName\x12,\n" +
-	"\x11threatIntelSource\x18\x04 \x01(\tR\x11threatIntelSource\"6\n" +
-	"\x14UiAlertReplyFromHost\x12\x1e\n" +
+	"\x11threatIntelSource\x18\x04 \x01(\tR\x11threatIntelSource\".\n" +
+	"\fUiAlertReply\x12\x1e\n" +
 	"\n" +
 	"userAction\x18\x01 \x01(\tR\n" +
-	"userAction2d\n" +
-	"\tDnsAlerts\x12W\n" +
-	"\x03Dns\x12'.alerts_proto.DnsAlertMessageFromBlocky\x1a#.alerts_proto.DnsAlertReplyToBlocky(\x010\x012\\\n" +
-	"\bUiAlerts\x12P\n" +
-	"\x02Ui\x12\".alerts_proto.UiAlertMessageToHost\x1a\".alerts_proto.UiAlertReplyFromHost(\x010\x01B\x03Z\x01.b\x06proto3"
+	"userAction2F\n" +
+	"\tDnsAlerts\x129\n" +
+	"\x03Dns\x12\x16.alerts_proto.DnsAlert\x1a\x16.alerts_proto.DnsAlert(\x010\x012G\n" +
+	"\bUiAlerts\x12;\n" +
+	"\x02Ui\x12\x15.alerts_proto.UiAlert\x1a\x1a.alerts_proto.UiAlertReply(\x010\x01B\x03Z\x01.b\x06proto3"
 
 var (
 	file_alerts_proto_rawDescOnce sync.Once
@@ -276,16 +276,16 @@ func file_alerts_proto_rawDescGZIP() []byte {
 
 var file_alerts_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_alerts_proto_goTypes = []any{
-	(*DnsAlertMessageFromBlocky)(nil), // 0: alerts_proto.DnsAlertMessageFromBlocky
-	(*DnsAlertReplyToBlocky)(nil),     // 1: alerts_proto.DnsAlertReplyToBlocky
-	(*UiAlertMessageToHost)(nil),      // 2: alerts_proto.UiAlertMessageToHost
-	(*UiAlertReplyFromHost)(nil),      // 3: alerts_proto.UiAlertReplyFromHost
+	(*DnsAlert)(nil),      // 0: alerts_proto.DnsAlert
+	(*DnsAlertReply)(nil), // 1: alerts_proto.DnsAlertReply
+	(*UiAlert)(nil),       // 2: alerts_proto.UiAlert
+	(*UiAlertReply)(nil),  // 3: alerts_proto.UiAlertReply
 }
 var file_alerts_proto_depIdxs = []int32{
-	0, // 0: alerts_proto.DnsAlerts.Dns:input_type -> alerts_proto.DnsAlertMessageFromBlocky
-	2, // 1: alerts_proto.UiAlerts.Ui:input_type -> alerts_proto.UiAlertMessageToHost
-	1, // 2: alerts_proto.DnsAlerts.Dns:output_type -> alerts_proto.DnsAlertReplyToBlocky
-	3, // 3: alerts_proto.UiAlerts.Ui:output_type -> alerts_proto.UiAlertReplyFromHost
+	0, // 0: alerts_proto.DnsAlerts.Dns:input_type -> alerts_proto.DnsAlert
+	2, // 1: alerts_proto.UiAlerts.Ui:input_type -> alerts_proto.UiAlert
+	0, // 2: alerts_proto.DnsAlerts.Dns:output_type -> alerts_proto.DnsAlert
+	3, // 3: alerts_proto.UiAlerts.Ui:output_type -> alerts_proto.UiAlertReply
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
