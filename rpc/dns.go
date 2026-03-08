@@ -17,11 +17,11 @@ import (
 var rpcLogger *zerolog.Logger
 
 type DnsAlertsServer struct {
-    pbalerts.UnsafeDnsAlertsServer
+    pbalerts.UnsafeDnsAlertServiceServer
 }
 
 
-func (server DnsAlertsServer) Dns(srv pbalerts.DnsAlerts_DnsServer) error {
+func (server DnsAlertsServer) Dns(srv pbalerts.DnsAlertService_DnsServer) error {
 	rpcLogger.Info().Msg("Starting DnsAlertsServer grpc stream loop")
 
 	ctx := srv.Context()
@@ -107,7 +107,7 @@ func InitDnsAlertsRpc(logger *zerolog.Logger) { //loop with exit channel, run as
 	}
 
 	s := grpc.NewServer(grpc.Creds(tlsCreds))
-	pbalerts.RegisterDnsAlertsServer(s, &DnsAlertsServer{})
+	pbalerts.RegisterDnsAlertServiceServer(s, &DnsAlertsServer{})
 
 	logger.Info().Msg("DnsAlerts grpc server listening at" + lis.Addr().String())
 	if err := s.Serve(lis); err != nil {

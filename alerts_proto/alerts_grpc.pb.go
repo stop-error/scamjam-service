@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -26,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DnsAlertServiceClient interface {
-	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlertReply], error)
+	Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[DnsAlert, emptypb.Empty], error)
 }
 
 type dnsAlertServiceClient struct {
@@ -37,24 +38,24 @@ func NewDnsAlertServiceClient(cc grpc.ClientConnInterface) DnsAlertServiceClient
 	return &dnsAlertServiceClient{cc}
 }
 
-func (c *dnsAlertServiceClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DnsAlert, DnsAlertReply], error) {
+func (c *dnsAlertServiceClient) Dns(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[DnsAlert, emptypb.Empty], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &DnsAlertService_ServiceDesc.Streams[0], DnsAlertService_Dns_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[DnsAlert, DnsAlertReply]{ClientStream: stream}
+	x := &grpc.GenericClientStream[DnsAlert, emptypb.Empty]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlertService_DnsClient = grpc.BidiStreamingClient[DnsAlert, DnsAlertReply]
+type DnsAlertService_DnsClient = grpc.ClientStreamingClient[DnsAlert, emptypb.Empty]
 
 // DnsAlertServiceServer is the server API for DnsAlertService service.
 // All implementations must embed UnimplementedDnsAlertServiceServer
 // for forward compatibility.
 type DnsAlertServiceServer interface {
-	Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]) error
+	Dns(grpc.ClientStreamingServer[DnsAlert, emptypb.Empty]) error
 	mustEmbedUnimplementedDnsAlertServiceServer()
 }
 
@@ -65,7 +66,7 @@ type DnsAlertServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDnsAlertServiceServer struct{}
 
-func (UnimplementedDnsAlertServiceServer) Dns(grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]) error {
+func (UnimplementedDnsAlertServiceServer) Dns(grpc.ClientStreamingServer[DnsAlert, emptypb.Empty]) error {
 	return status.Error(codes.Unimplemented, "method Dns not implemented")
 }
 func (UnimplementedDnsAlertServiceServer) mustEmbedUnimplementedDnsAlertServiceServer() {}
@@ -90,11 +91,11 @@ func RegisterDnsAlertServiceServer(s grpc.ServiceRegistrar, srv DnsAlertServiceS
 }
 
 func _DnsAlertService_Dns_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(DnsAlertServiceServer).Dns(&grpc.GenericServerStream[DnsAlert, DnsAlertReply]{ServerStream: stream})
+	return srv.(DnsAlertServiceServer).Dns(&grpc.GenericServerStream[DnsAlert, emptypb.Empty]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DnsAlertService_DnsServer = grpc.BidiStreamingServer[DnsAlert, DnsAlertReply]
+type DnsAlertService_DnsServer = grpc.ClientStreamingServer[DnsAlert, emptypb.Empty]
 
 // DnsAlertService_ServiceDesc is the grpc.ServiceDesc for DnsAlertService service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -107,7 +108,6 @@ var DnsAlertService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Dns",
 			Handler:       _DnsAlertService_Dns_Handler,
-			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},

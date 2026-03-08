@@ -9,6 +9,7 @@ package __
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -81,50 +82,6 @@ func (x *DnsAlert) GetCategory() string {
 	return ""
 }
 
-type DnsAlertReply struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ack           bool                   `protobuf:"varint,1,opt,name=ack,proto3" json:"ack,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DnsAlertReply) Reset() {
-	*x = DnsAlertReply{}
-	mi := &file_alerts_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DnsAlertReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DnsAlertReply) ProtoMessage() {}
-
-func (x *DnsAlertReply) ProtoReflect() protoreflect.Message {
-	mi := &file_alerts_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DnsAlertReply.ProtoReflect.Descriptor instead.
-func (*DnsAlertReply) Descriptor() ([]byte, []int) {
-	return file_alerts_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *DnsAlertReply) GetAck() bool {
-	if x != nil {
-		return x.Ack
-	}
-	return false
-}
-
 type UiAlert struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	ThreatCategory    string                 `protobuf:"bytes,1,opt,name=threatCategory,proto3" json:"threatCategory,omitempty"`
@@ -137,7 +94,7 @@ type UiAlert struct {
 
 func (x *UiAlert) Reset() {
 	*x = UiAlert{}
-	mi := &file_alerts_proto_msgTypes[2]
+	mi := &file_alerts_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -149,7 +106,7 @@ func (x *UiAlert) String() string {
 func (*UiAlert) ProtoMessage() {}
 
 func (x *UiAlert) ProtoReflect() protoreflect.Message {
-	mi := &file_alerts_proto_msgTypes[2]
+	mi := &file_alerts_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +119,7 @@ func (x *UiAlert) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UiAlert.ProtoReflect.Descriptor instead.
 func (*UiAlert) Descriptor() ([]byte, []int) {
-	return file_alerts_proto_rawDescGZIP(), []int{2}
+	return file_alerts_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *UiAlert) GetThreatCategory() string {
@@ -202,7 +159,7 @@ type UiAlertReply struct {
 
 func (x *UiAlertReply) Reset() {
 	*x = UiAlertReply{}
-	mi := &file_alerts_proto_msgTypes[3]
+	mi := &file_alerts_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -214,7 +171,7 @@ func (x *UiAlertReply) String() string {
 func (*UiAlertReply) ProtoMessage() {}
 
 func (x *UiAlertReply) ProtoReflect() protoreflect.Message {
-	mi := &file_alerts_proto_msgTypes[3]
+	mi := &file_alerts_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -227,7 +184,7 @@ func (x *UiAlertReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UiAlertReply.ProtoReflect.Descriptor instead.
 func (*UiAlertReply) Descriptor() ([]byte, []int) {
-	return file_alerts_proto_rawDescGZIP(), []int{3}
+	return file_alerts_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UiAlertReply) GetUserAction() string {
@@ -241,13 +198,11 @@ var File_alerts_proto protoreflect.FileDescriptor
 
 const file_alerts_proto_rawDesc = "" +
 	"\n" +
-	"\falerts.proto\x12\falerts_proto\"Z\n" +
+	"\falerts.proto\x12\falerts_proto\x1a\x1bgoogle/protobuf/empty.proto\"Z\n" +
 	"\bDnsAlert\x12\x1a\n" +
 	"\bhostname\x18\x01 \x01(\tR\bhostname\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x1a\n" +
-	"\bcategory\x18\x03 \x01(\tR\bcategory\"!\n" +
-	"\rDnsAlertReply\x12\x10\n" +
-	"\x03ack\x18\x01 \x01(\bR\x03ack\"\xb9\x01\n" +
+	"\bcategory\x18\x03 \x01(\tR\bcategory\"\xb9\x01\n" +
 	"\aUiAlert\x12&\n" +
 	"\x0ethreatCategory\x18\x01 \x01(\tR\x0ethreatCategory\x12,\n" +
 	"\x11threatSubCategory\x18\x02 \x01(\tR\x11threatSubCategory\x12*\n" +
@@ -256,9 +211,9 @@ const file_alerts_proto_rawDesc = "" +
 	"\fUiAlertReply\x12\x1e\n" +
 	"\n" +
 	"userAction\x18\x01 \x01(\tR\n" +
-	"userAction2Q\n" +
-	"\x0fDnsAlertService\x12>\n" +
-	"\x03Dns\x12\x16.alerts_proto.DnsAlert\x1a\x1b.alerts_proto.DnsAlertReply(\x010\x012M\n" +
+	"userAction2J\n" +
+	"\x0fDnsAlertService\x127\n" +
+	"\x03Dns\x12\x16.alerts_proto.DnsAlert\x1a\x16.google.protobuf.Empty(\x012M\n" +
 	"\x0eUiAlertService\x12;\n" +
 	"\x02Ui\x12\x15.alerts_proto.UiAlert\x1a\x1a.alerts_proto.UiAlertReply(\x010\x01B\x03Z\x01.b\x06proto3"
 
@@ -274,18 +229,18 @@ func file_alerts_proto_rawDescGZIP() []byte {
 	return file_alerts_proto_rawDescData
 }
 
-var file_alerts_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_alerts_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_alerts_proto_goTypes = []any{
 	(*DnsAlert)(nil),      // 0: alerts_proto.DnsAlert
-	(*DnsAlertReply)(nil), // 1: alerts_proto.DnsAlertReply
-	(*UiAlert)(nil),       // 2: alerts_proto.UiAlert
-	(*UiAlertReply)(nil),  // 3: alerts_proto.UiAlertReply
+	(*UiAlert)(nil),       // 1: alerts_proto.UiAlert
+	(*UiAlertReply)(nil),  // 2: alerts_proto.UiAlertReply
+	(*emptypb.Empty)(nil), // 3: google.protobuf.Empty
 }
 var file_alerts_proto_depIdxs = []int32{
 	0, // 0: alerts_proto.DnsAlertService.Dns:input_type -> alerts_proto.DnsAlert
-	2, // 1: alerts_proto.UiAlertService.Ui:input_type -> alerts_proto.UiAlert
-	1, // 2: alerts_proto.DnsAlertService.Dns:output_type -> alerts_proto.DnsAlertReply
-	3, // 3: alerts_proto.UiAlertService.Ui:output_type -> alerts_proto.UiAlertReply
+	1, // 1: alerts_proto.UiAlertService.Ui:input_type -> alerts_proto.UiAlert
+	3, // 2: alerts_proto.DnsAlertService.Dns:output_type -> google.protobuf.Empty
+	2, // 3: alerts_proto.UiAlertService.Ui:output_type -> alerts_proto.UiAlertReply
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -304,7 +259,7 @@ func file_alerts_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_alerts_proto_rawDesc), len(file_alerts_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
