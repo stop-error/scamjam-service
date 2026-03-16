@@ -74,7 +74,7 @@ const file_ca_proto_rawDesc = "" +
 	"\aNewCert\x12\x12\n" +
 	"\x04cert\x18\x01 \x01(\tR\x04cert2A\n" +
 	"\bUpdateCA\x125\n" +
-	"\x02CA\x12\x15.alerts_proto.NewCert\x1a\x16.google.protobuf.Empty(\x01B\x03Z\x01.b\x06proto3"
+	"\x02CA\x12\x16.google.protobuf.Empty\x1a\x15.alerts_proto.NewCert0\x01B\x03Z\x01.b\x06proto3"
 
 var (
 	file_ca_proto_rawDescOnce sync.Once
@@ -94,8 +94,8 @@ var file_ca_proto_goTypes = []any{
 	(*emptypb.Empty)(nil), // 1: google.protobuf.Empty
 }
 var file_ca_proto_depIdxs = []int32{
-	0, // 0: alerts_proto.UpdateCA.CA:input_type -> alerts_proto.NewCert
-	1, // 1: alerts_proto.UpdateCA.CA:output_type -> google.protobuf.Empty
+	1, // 0: alerts_proto.UpdateCA.CA:input_type -> google.protobuf.Empty
+	0, // 1: alerts_proto.UpdateCA.CA:output_type -> alerts_proto.NewCert
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

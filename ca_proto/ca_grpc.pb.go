@@ -27,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UpdateCAClient interface {
-	CA(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[NewCert, emptypb.Empty], error)
+	CA(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[NewCert], error)
 }
 
 type updateCAClient struct {
@@ -38,24 +38,30 @@ func NewUpdateCAClient(cc grpc.ClientConnInterface) UpdateCAClient {
 	return &updateCAClient{cc}
 }
 
-func (c *updateCAClient) CA(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[NewCert, emptypb.Empty], error) {
+func (c *updateCAClient) CA(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[NewCert], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UpdateCA_ServiceDesc.Streams[0], UpdateCA_CA_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[NewCert, emptypb.Empty]{ClientStream: stream}
+	x := &grpc.GenericClientStream[emptypb.Empty, NewCert]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UpdateCA_CAClient = grpc.ClientStreamingClient[NewCert, emptypb.Empty]
+type UpdateCA_CAClient = grpc.ServerStreamingClient[NewCert]
 
 // UpdateCAServer is the server API for UpdateCA service.
 // All implementations must embed UnimplementedUpdateCAServer
 // for forward compatibility.
 type UpdateCAServer interface {
-	CA(grpc.ClientStreamingServer[NewCert, emptypb.Empty]) error
+	CA(*emptypb.Empty, grpc.ServerStreamingServer[NewCert]) error
 	mustEmbedUnimplementedUpdateCAServer()
 }
 
@@ -66,7 +72,7 @@ type UpdateCAServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUpdateCAServer struct{}
 
-func (UnimplementedUpdateCAServer) CA(grpc.ClientStreamingServer[NewCert, emptypb.Empty]) error {
+func (UnimplementedUpdateCAServer) CA(*emptypb.Empty, grpc.ServerStreamingServer[NewCert]) error {
 	return status.Error(codes.Unimplemented, "method CA not implemented")
 }
 func (UnimplementedUpdateCAServer) mustEmbedUnimplementedUpdateCAServer() {}
@@ -91,11 +97,15 @@ func RegisterUpdateCAServer(s grpc.ServiceRegistrar, srv UpdateCAServer) {
 }
 
 func _UpdateCA_CA_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(UpdateCAServer).CA(&grpc.GenericServerStream[NewCert, emptypb.Empty]{ServerStream: stream})
+	m := new(emptypb.Empty)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(UpdateCAServer).CA(m, &grpc.GenericServerStream[emptypb.Empty, NewCert]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UpdateCA_CAServer = grpc.ClientStreamingServer[NewCert, emptypb.Empty]
+type UpdateCA_CAServer = grpc.ServerStreamingServer[NewCert]
 
 // UpdateCA_ServiceDesc is the grpc.ServiceDesc for UpdateCA service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -108,7 +118,7 @@ var UpdateCA_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "CA",
 			Handler:       _UpdateCA_CA_Handler,
-			ClientStreams: true,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "ca.proto",

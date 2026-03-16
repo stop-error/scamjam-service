@@ -7,7 +7,7 @@ option go_package = ".";
 import "google/protobuf/empty.proto";
 
 service UpdateCA {
-  rpc CA(stream NewCert) returns (google.protobuf.Empty);
+  rpc CA(google.protobuf.Empty) returns (stream NewCert);
 }
 
 message NewCert {
