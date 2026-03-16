@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package alerts_proto;
+
+option go_package = ".";
+
+import "google/protobuf/empty.proto";
+
+service UpdateCA {
+  rpc CA(stream NewCert) returns (google.protobuf.Empty);
+}
+
+message NewCert {
+  string cert = 1;
+}
