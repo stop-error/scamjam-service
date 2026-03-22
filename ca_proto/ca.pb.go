@@ -24,7 +24,8 @@ const (
 
 type NewCert struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Cert          string                 `protobuf:"bytes,1,opt,name=cert,proto3" json:"cert,omitempty"`
+	CertType      string                 `protobuf:"bytes,1,opt,name=certType,proto3" json:"certType,omitempty"`
+	Cert          []byte                 `protobuf:"bytes,2,opt,name=cert,proto3" json:"cert,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,22 +60,30 @@ func (*NewCert) Descriptor() ([]byte, []int) {
 	return file_ca_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *NewCert) GetCert() string {
+func (x *NewCert) GetCertType() string {
+	if x != nil {
+		return x.CertType
+	}
+	return ""
+}
+
+func (x *NewCert) GetCert() []byte {
 	if x != nil {
 		return x.Cert
 	}
-	return ""
+	return nil
 }
 
 var File_ca_proto protoreflect.FileDescriptor
 
 const file_ca_proto_rawDesc = "" +
 	"\n" +
-	"\bca.proto\x12\falerts_proto\x1a\x1bgoogle/protobuf/empty.proto\"\x1d\n" +
-	"\aNewCert\x12\x12\n" +
-	"\x04cert\x18\x01 \x01(\tR\x04cert2A\n" +
-	"\bUpdateCA\x125\n" +
-	"\x02CA\x12\x16.google.protobuf.Empty\x1a\x15.alerts_proto.NewCert0\x01B\x03Z\x01.b\x06proto3"
+	"\bca.proto\x12\bca_proto\x1a\x1bgoogle/protobuf/empty.proto\"9\n" +
+	"\aNewCert\x12\x1a\n" +
+	"\bcertType\x18\x01 \x01(\tR\bcertType\x12\x12\n" +
+	"\x04cert\x18\x02 \x01(\fR\x04cert2=\n" +
+	"\bUpdateCA\x121\n" +
+	"\x02CA\x12\x16.google.protobuf.Empty\x1a\x11.ca_proto.NewCert0\x01B\x03Z\x01.b\x06proto3"
 
 var (
 	file_ca_proto_rawDescOnce sync.Once
@@ -90,12 +99,12 @@ func file_ca_proto_rawDescGZIP() []byte {
 
 var file_ca_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_ca_proto_goTypes = []any{
-	(*NewCert)(nil),       // 0: alerts_proto.NewCert
+	(*NewCert)(nil),       // 0: ca_proto.NewCert
 	(*emptypb.Empty)(nil), // 1: google.protobuf.Empty
 }
 var file_ca_proto_depIdxs = []int32{
-	1, // 0: alerts_proto.UpdateCA.CA:input_type -> google.protobuf.Empty
-	0, // 1: alerts_proto.UpdateCA.CA:output_type -> alerts_proto.NewCert
+	1, // 0: ca_proto.UpdateCA.CA:input_type -> google.protobuf.Empty
+	0, // 1: ca_proto.UpdateCA.CA:output_type -> ca_proto.NewCert
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

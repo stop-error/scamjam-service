@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package alerts_proto;
+package ca_proto;
 
 option go_package = ".";
 
@@ -11,5 +11,6 @@ service UpdateCA {
 }
 
 message NewCert {
-  string cert = 1;
+  string certType = 1;
+  bytes cert = 2;
 }

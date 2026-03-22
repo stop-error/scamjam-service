@@ -20,7 +20,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UpdateCA_CA_FullMethodName = "/alerts_proto.UpdateCA/CA"
+	UpdateCA_CA_FullMethodName = "/ca_proto.UpdateCA/CA"
 )
 
 // UpdateCAClient is the client API for UpdateCA service.
@@ -111,7 +111,7 @@ type UpdateCA_CAServer = grpc.ServerStreamingServer[NewCert]
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UpdateCA_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "alerts_proto.UpdateCA",
+	ServiceName: "ca_proto.UpdateCA",
 	HandlerType: (*UpdateCAServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
