@@ -6,25 +6,41 @@ import (
 	"path/filepath"
 
 	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 )
 
-func InitLogger() (useLogFile bool, logFilePath string) {
-	executable, err := os.Executable()
-	if err != nil { 
-		log.Error().Msg("Could not get root path of executable file! Logging will be console only." + err.Error())
-		return false, ""
-	} 
+var Logger zerolog.Logger
+var LogFile *os.File
+ 
 
-	currentLogPath := filepath.Dir(executable) + "\\scamjam-service.log"
-	oldLogPath := filepath.Dir(executable) + "\\scamjam-service.old"
+func GetLoggerAsPointer() *zerolog.Logger {
+	return &Logger
+}
+
+func InitLogger(logFileName string) error {
+	executable, err := os.Executable()
+	currentLogPath := filepath.Dir(executable) + "\\" + logFileName + ".log"
+	oldLogPath := filepath.Dir(executable) + "\\" + logFileName + ".old"
+
 	err = RunLogCleanup(currentLogPath, oldLogPath)
 	if err != nil {
-		log.Error().Msg("Error running log cleanup! logging will be console-only." + err.Error())
-		return false, ""
+		log.Error().Err(err).Msg("Error running log cleanup! logging will be console-only.")
+		return err
 	}
 
-	return true, currentLogPath
+
+	logFile, err := os.OpenFile(currentLogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0664)
+	if err != nil { 
+		log.Error().Err(err).Msg("Could not get root path of executable file! Logging will be console only.")
+		Logger = zerolog.New(os.Stderr).With().Caller().Logger()
+	} else {
+		defer logFile.Close()
+		Logger = zerolog.New(zerolog.MultiLevelWriter(os.Stdout, logFile)).With().Caller().Logger()
+	}
+
+	return nil
 }
+
 
 func RunLogCleanup(currentLogPath string, oldLogPath string) (error) { //TODO: Oh my god clean this up
 
